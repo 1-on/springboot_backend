@@ -1,9 +1,11 @@
 package com.example.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.example.common.Result;
 import com.example.common.RoleEnum;
 import com.example.entity.Account;
 import com.example.entity.Admin;
+import com.example.exception.CustomException;
 import com.example.service.AdminService;
 import com.example.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,15 @@ public class WebController {
             return Result.error("角色错误");
         }
         return Result.success(dbAccount);
+    }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody Account account) {
+        if (ObjectUtil.isEmpty(account.getUsername()) || ObjectUtil.isEmpty(account.getPassword())) {
+            throw new CustomException("账号或密码必填");
+        }
+        studentService.register(account);
+        return Result.success();
+
     }
 }
