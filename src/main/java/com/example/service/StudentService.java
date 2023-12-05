@@ -6,9 +6,12 @@ import com.example.entity.Account;
 import com.example.entity.Student;
 import com.example.exception.CustomException;
 import com.example.mapper.StudentMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -38,7 +41,7 @@ public class StudentService {
     }
 
     // 新增方法
-    private void add(Student student) {
+    public void add(Student student) {
         Student dbStudent = studentMapper.selectByUserName(student.getUsername());
         if (dbStudent != null) {  // 已有同名账号
             throw new CustomException("账号已存在");
@@ -48,5 +51,19 @@ public class StudentService {
         }
         student.setRole(RoleEnum.STUDENT.name());
         studentMapper.insert(student);
+    }
+
+    public void deleteById(Integer id) {
+        studentMapper.deleteById(id);
+    }
+
+    public void updateById(Student student) {
+        studentMapper.updateById(student);
+    }
+
+    public PageInfo<Student> selectPage(Integer pageNum, Integer pageSize, Student student) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Student> studentList = studentMapper.selectAll(student);
+        return PageInfo.of(studentList);
     }
 }
