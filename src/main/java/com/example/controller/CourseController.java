@@ -18,7 +18,25 @@ public class CourseController {
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
                              Course course) {
-        PageInfo<Course> coursePageInfo = courseService.selectPage(pageNum, pageSize,course);
+        PageInfo<Course> coursePageInfo = courseService.selectPage(pageNum, pageSize, course);
         return Result.success(coursePageInfo);
+    }
+
+    @PostMapping("/add")
+    public Result add(@RequestBody Course course) {
+        courseService.add(course);
+        return Result.success();
+    }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody Course course) {
+        courseService.updateById(course);
+        return Result.success();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result delete(@PathVariable Integer id) {
+        courseService.deleteById(id);
+        return Result.success();
     }
 }
