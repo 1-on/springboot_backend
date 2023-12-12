@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/mapper/CourseMapper.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/mapper/StudentCourseMapper.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/mapper/StudentMapper.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mapper/StudentCourse.xml" dialect="MySQL" />
   </component>
 </project>
