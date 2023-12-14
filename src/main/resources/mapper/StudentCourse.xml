@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.StudentCourseMapper">
-    <select id="selectAll" resultType="com.example.entity.StudentCourse">
+<mapper namespace="com.yixian.mapper.StudentCourseMapper">
+    <select id="selectAll" resultType="com.yixian.entity.StudentCourse">
         select student_course.*,student.name as studentName from student_course
         left join student
         on student_course.student_id = student.id
