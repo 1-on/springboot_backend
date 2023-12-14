@@ -28,6 +28,11 @@ public class WebController {
         return Result.success();
     }
 
+    @RequestMapping("/he")
+    public String hello2(){
+        return "spring";
+    }
+
     @PostMapping("/login")
     public Result login(@RequestBody Account account) {
         Account dbAccount;

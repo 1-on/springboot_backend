@@ -12,6 +12,6 @@
             <if test="no!=null">and student_course.no like concat('%',#{no},'%')</if>
             <if test="studentId!=null">and student_course.student_id=#{studentId}</if>
         </where>
-        order by student_course.id desc
+        order by id desc
     </select>
 </mapper>
