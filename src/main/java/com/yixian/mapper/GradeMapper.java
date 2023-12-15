@@ -1,27 +1,30 @@
 package com.yixian.mapper;
 
 import com.yixian.entity.Grade;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
+/**
+ * @author jiangfei
+ * @description 针对表【grade(成绩表)】的数据库操作Mapper
+ * @createDate 2023-12-14 20:08:17
+ * @Entity com.yixian.entity.Grade
+ */
 public interface GradeMapper {
 
-    @Insert("insert into grade(course_id,student_id,score,comment,feedback)values " +
-            "(#{courseId},#{studentId},#{score},#{comment},#{feedback})")
-    void insert(Grade grade);
+    int deleteByPrimaryKey(Long id);
 
-    List<Grade> selectAll(Grade grade);
+    int insert(Grade record);
 
-    @Update("update grade set score = #{score},comment=#{comment},feedback=#{feedback} where id = #{id}")
-    void update(Grade grade);
+    int insertSelective(Grade record);
 
-    @Select("select * from grade where student_id = #{studentId} and course_id=#{courseId}")
+    Grade selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Grade record);
+
+    int updateByPrimaryKey(Grade record);
+
     Grade selectByCondition(Grade grade);
 
-    @Delete("delete from grade where id = #{id}")
-    void deleteById(Integer id);
+    List<Grade> selectAll(String courseName, String studentName, Integer studentId, Integer teacherId);
 }

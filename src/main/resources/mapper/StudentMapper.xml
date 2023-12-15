@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixian.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.yixian.entity.Student">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="birth" column="birth" jdbcType="VARCHAR"/>
+            <result property="awatar" column="awatar" jdbcType="VARCHAR"/>
+            <result property="role" column="role" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,password,
+        name,sex,phone,
+        email,birth,awatar,
+        role
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from student
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+    <select id="selectByUserName" resultType="com.yixian.entity.Student">
+        select *
+        from student
+        where username = #{username}
+    </select>
+    <select id="selectAll" resultType="com.yixian.entity.Student">
+        select *
+        from student
+        where username like concat('%', #{username}, '%')
+          and name like concat('%', #{name}, '%')
+        order by id desc
+    </select>
+    <select id="selectIdByName" resultType="java.lang.Integer">
+        select student.id
+        from student
+        where student.name = #{name}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from student
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Student" useGeneratedKeys="true">
+        insert into student
+        ( id,username,password
+        ,name,sex,phone
+        ,email,birth,awatar
+        ,role)
+        values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}
+        ,#{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR}
+        ,#{email,jdbcType=VARCHAR},#{birth,jdbcType=VARCHAR},#{awatar,jdbcType=VARCHAR}
+        ,#{role,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Student" useGeneratedKeys="true">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="username != null">username,</if>
+                <if test="password != null">password,</if>
+                <if test="name != null">name,</if>
+                <if test="sex != null">sex,</if>
+                <if test="phone != null">phone,</if>
+                <if test="email != null">email,</if>
+                <if test="birth != null">birth,</if>
+                <if test="awatar != null">awatar,</if>
+                <if test="role != null">role,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+                <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+                <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+                <if test="sex != null">#{sex,jdbcType=VARCHAR},</if>
+                <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+                <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+                <if test="birth != null">#{birth,jdbcType=VARCHAR},</if>
+                <if test="awatar != null">#{awatar,jdbcType=VARCHAR},</if>
+                <if test="role != null">#{role,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yixian.entity.Student">
+        update student
+        <set>
+                <if test="username != null">
+                    username = #{username,jdbcType=VARCHAR},
+                </if>
+                <if test="password != null">
+                    password = #{password,jdbcType=VARCHAR},
+                </if>
+                <if test="name != null">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="sex != null">
+                    sex = #{sex,jdbcType=VARCHAR},
+                </if>
+                <if test="phone != null">
+                    phone = #{phone,jdbcType=VARCHAR},
+                </if>
+                <if test="email != null">
+                    email = #{email,jdbcType=VARCHAR},
+                </if>
+                <if test="birth != null">
+                    birth = #{birth,jdbcType=VARCHAR},
+                </if>
+                <if test="awatar != null">
+                    awatar = #{awatar,jdbcType=VARCHAR},
+                </if>
+                <if test="role != null">
+                    role = #{role,jdbcType=VARCHAR},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yixian.entity.Student">
+        update student
+        set 
+            username =  #{username,jdbcType=VARCHAR},
+            password =  #{password,jdbcType=VARCHAR},
+            name =  #{name,jdbcType=VARCHAR},
+            sex =  #{sex,jdbcType=VARCHAR},
+            phone =  #{phone,jdbcType=VARCHAR},
+            email =  #{email,jdbcType=VARCHAR},
+            birth =  #{birth,jdbcType=VARCHAR},
+            awatar =  #{awatar,jdbcType=VARCHAR},
+            role =  #{role,jdbcType=VARCHAR}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>

@@ -5,9 +5,9 @@ import com.yixian.common.RoleEnum;
 import com.yixian.entity.Account;
 import com.yixian.entity.Student;
 import com.yixian.exception.CustomException;
-import com.yixian.mapper.StudentMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yixian.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +42,7 @@ public class StudentService {
 
     // 新增方法
     public void add(Student student) {
-        Student dbStudent = studentMapper.selectByUserName(student.getUsername());
+        Student dbStudent = (Student) studentMapper.selectByUserName(student.getUsername());
         if (dbStudent != null) {  // 已有同名账号
             throw new CustomException("账号已存在");
         }
@@ -54,11 +54,11 @@ public class StudentService {
     }
 
     public void deleteById(Integer id) {
-        studentMapper.deleteById(id);
+        studentMapper.deleteByPrimaryKey(Long.valueOf(id));
     }
 
     public void updateById(Student student) {
-        studentMapper.updateById(student);
+        studentMapper.updateByPrimaryKey(student);
     }
 
     public PageInfo<Student> selectPage(Integer pageNum, Integer pageSize, Student student) {

@@ -1,77 +1,46 @@
 package com.yixian.entity;
 
-public class Grade {
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 成绩表
+ * @TableName grade
+ */
+@Data
+public class Grade implements Serializable {
+    /**
+     * ID
+     */
     private Integer id;
+
+    /**
+     * 课程ID
+     */
     private Integer courseId;
+
+    /**
+     * 学生ID
+     */
     private Integer studentId;
-    private String score;
+
+    /**
+     * 分数
+     */
+    private Double score;
+
+    /**
+     * 评语
+     */
     private String comment;
+
+    /**
+     * 学生反馈
+     */
     private String feedback;
 
-    private String studentName;
-    private String courseName;
+    private Course course;
+    private Student student;
 
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
+    private static final long serialVersionUID = 1L;
 }

@@ -1,61 +1,36 @@
 package com.yixian.entity;
 
-public class StudentCourse {
+import java.io.Serializable;
+
+import lombok.Data;
+
+/**
+ * 学生选课
+ *
+ * @TableName student_course
+ */
+@Data
+public class StudentCourse implements Serializable {
+    /**
+     * ID
+     */
     private Integer id;
-    private String name;
-    private String no;
+
+    /**
+     * 学生ID
+     */
     private Integer studentId;
+
+    /**
+     * 课程ID
+     */
     private Integer courseId;
 
-    private String studentName;
+    private Student student;
 
+    private Course course;
 
-    public String getStudentName() {
-        return studentName;
-    }
+    private Teacher teacher;
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
+    private static final long serialVersionUID = 1L;
 }

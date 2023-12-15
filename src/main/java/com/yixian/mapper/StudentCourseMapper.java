@@ -1,23 +1,30 @@
 package com.yixian.mapper;
 
 import com.yixian.entity.StudentCourse;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * @author jiangfei
+ * @description 针对表【student_course(学生选课)】的数据库操作Mapper
+ * @createDate 2023-12-14 20:08:26
+ * @Entity com.yixian.entity.StudentCourse
+ */
 public interface StudentCourseMapper {
 
-    @Insert("insert into student_course(name,no,student_id,course_id)values(#{name},#{no},#{studentId},#{courseId})")
-    void insert(StudentCourse studentCourse);
+    int deleteByPrimaryKey(Long id);
 
-    @Select("select * from student_course where student_id = #{studentId} and course_id=#{courseId}")
+    int insert(StudentCourse record);
+
+    int insertSelective(StudentCourse record);
+
+    StudentCourse selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(StudentCourse record);
+
+    int updateByPrimaryKey(StudentCourse record);
+
     StudentCourse selectByCondition(StudentCourse studentCourse);
 
-//    @Select("select * from student_course where name like concat('%',#{name},'%') and no like concat('%',#{no},'%') and student_id=#{studentId}")
-    List<StudentCourse> selectAll(StudentCourse studentCourse);
-
-    @Delete("delete from student_course where id = #{id}")
-    void deleteById(Integer id);
+    List<StudentCourse> selectAll(String name, String no, Integer studentId, Integer teacherId);
 }

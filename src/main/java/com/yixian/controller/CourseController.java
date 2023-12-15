@@ -17,8 +17,10 @@ public class CourseController {
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             Course course) {
-        PageInfo<Course> coursePageInfo = courseService.selectPage(pageNum, pageSize, course);
+                             @RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "no", required = false) String no,
+                             @RequestParam(name = "teacher", required = false) String teacher) {
+        PageInfo<Course> coursePageInfo = courseService.selectPage(pageNum, pageSize, name,no,teacher);
         return Result.success(coursePageInfo);
     }
 
@@ -30,6 +32,7 @@ public class CourseController {
 
     @PutMapping("/update")
     public Result update(@RequestBody Course course) {
+        System.err.println(course);
         courseService.updateById(course);
         return Result.success();
     }

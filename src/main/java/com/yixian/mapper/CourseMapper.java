@@ -1,25 +1,30 @@
 package com.yixian.mapper;
 
 import com.yixian.entity.Course;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
+/**
+ * @author jiangfei
+ * @description 针对表【course(课程信息)】的数据库操作Mapper
+ * @createDate 2023-12-14 20:08:12
+ * @Entity com.yixian.entity.Course
+ */
 public interface CourseMapper {
-    @Select("select * from course where name like concat('%',#{name},'%') " +
-            "and no like concat('%',#{no},'%') and teacher like concat('%',#{teacher},'%') " +
-            "order by id desc  ")
-    List<Course> selectAll(Course course);
 
-    @Insert("insert into course (name, no, descr, times, teacher) VALUES(#{name},#{no},#{descr},#{times},#{teacher}) ")
-    void insert(Course course);
+    int deleteByPrimaryKey(Long id);
 
-    @Update("update course set name=#{name},no = #{no} ,descr=#{descr},times=#{times},teacher=#{teacher} where id =#{id}")
-    void updateById(Course course);
+    int insert(Course record);
 
-    @Delete("delete from course where id = #{id}")
-    void deleteById(Integer id);
+    int insertSelective(Course record);
+
+    Course selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Course record);
+
+    int updateByPrimaryKey(Course record);
+
+    List<Course> selectAll(String name, String no, String teacherName);
+
+    Integer selectIdByName(String name);
 }

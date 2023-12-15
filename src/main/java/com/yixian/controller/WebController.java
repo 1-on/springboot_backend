@@ -7,6 +7,7 @@ import com.yixian.entity.Account;
 import com.yixian.exception.CustomException;
 import com.yixian.service.AdminService;
 import com.yixian.service.StudentService;
+import com.yixian.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,9 @@ public class WebController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private TeacherService teacherService;
+
     /**
      * 默认请求接口
      */
@@ -28,20 +32,24 @@ public class WebController {
     }
 
     @RequestMapping("/he")
-    public String hello2(){
+    public String hello2() {
         return "spring";
     }
 
     @PostMapping("/login")
     public Result login(@RequestBody Account account) {
+        System.out.println(account.getRole());
         Account dbAccount;
         if (RoleEnum.ADMIN.name().equals(account.getRole())) { // 管理员登陆
             dbAccount = adminService.login(account);
         } else if (RoleEnum.STUDENT.name().equals(account.getRole())) {
             dbAccount = studentService.login(account);
+        } else if (RoleEnum.TEACHER.name().equals(account.getRole())) {
+            dbAccount = teacherService.login(account);
         } else {
             return Result.error("角色错误");
         }
+        System.out.println(dbAccount);
         return Result.success(dbAccount);
     }
 

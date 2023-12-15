@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixian.mapper.StudentCourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.yixian.entity.StudentCourse">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+        <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="StudentWithCourseMap" type="com.yixian.entity.StudentCourse">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <collection property="student" ofType="com.yixian.entity.Student">
+            <id property="id" column="sid"/>
+            <result property="name" column="sname"/>
+        </collection>
+        <collection property="course" ofType="com.yixian.entity.Course">
+            <id property="id" column="cid"/>
+            <result property="name" column="cname"/>
+            <result property="no" column="cno"/>
+        </collection>
+        <collection property="teacher" ofType="com.yixian.entity.Teacher">
+            <id property="id" column="tid"/>
+            <result property="name" column="tname"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,student_id,course_id
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student_course
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCondition" resultType="com.yixian.entity.StudentCourse">
+        select *
+        from student_course
+        where course_id = #{courseId}
+          and student_id = #{studentId}
+    </select>
+    <select id="selectAll" resultMap="StudentWithCourseMap">
+        select student_course.*, student.id as sid ,student.name as sname,course.id as cid,course.name as
+        cname,course.no as cno,teacher.id as tid,teacher.name as tname
+        from student_course,student,course,teacher
+        where student_course.student_id = student.id
+        and student_course.course_id = course.id
+        and course.teacher_id = teacher.id
+        <if test="name!=null">and course.name like concat('%',#{name},'%')</if>
+        <if test="no!=null">and course.no like concat('%',#{no},'%')</if>
+        <if test="studentId!=null">and student_course.student_id = #{studentId}</if>
+        <if test="teacherId!=null">and course.teacher_id = #{teacherId}</if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from student_course
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.StudentCourse"
+            useGeneratedKeys="true">
+        insert into student_course
+        (id, student_id, course_id)
+        values (#{id,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.StudentCourse"
+            useGeneratedKeys="true">
+        insert into student_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="studentId != null">student_id,</if>
+            <if test="courseId != null">course_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="studentId != null">#{studentId,jdbcType=INTEGER},</if>
+            <if test="courseId != null">#{courseId,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yixian.entity.StudentCourse">
+        update student_course
+        <set>
+            <if test="studentId != null">
+                student_id = #{studentId,jdbcType=INTEGER},
+            </if>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yixian.entity.StudentCourse">
+        update student_course
+        set student_id = #{studentId,jdbcType=INTEGER},
+            course_id  = #{courseId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

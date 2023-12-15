@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixian.mapper.CourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.yixian.entity.Course">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="no" column="no" jdbcType="VARCHAR"/>
+        <result property="descr" column="descr" jdbcType="VARCHAR"/>
+        <result property="times" column="times" jdbcType="VARCHAR"/>
+        <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="TeacherResultMap" type="com.yixian.entity.Course">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="no" column="no" jdbcType="VARCHAR"/>
+        <result property="descr" column="descr" jdbcType="VARCHAR"/>
+        <result property="times" column="times" jdbcType="VARCHAR"/>
+        <association property="teacher" javaType="com.yixian.entity.Teacher">
+            <id property="id" column="tid"/>
+            <result property="name" column="tname"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,no,
+        descr,times,teacher_id
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from course
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="TeacherResultMap">
+        select course.*, teacher.id as tid, teacher.name as tname
+        from course
+                 left join teacher
+                           on course.teacher_id = teacher.id
+        where course.name like concat('%', #{name}, '%')
+          and course.no like concat('%', #{no}, '%')
+          and teacher.name like concat('%', #{teacherName}, '%')
+        order by course.id desc
+    </select>
+    <select id="selectIdByName" resultType="java.lang.Integer">
+        select course.id
+        from course
+        where course.name = #{name}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from course
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Course"
+            useGeneratedKeys="true">
+        insert into course
+        ( id, name, no
+        , descr, times, teacher_id)
+        values ( #{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{no,jdbcType=VARCHAR}
+               , #{descr,jdbcType=VARCHAR}, #{times,jdbcType=VARCHAR}, #{teacher.id,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Course"
+            useGeneratedKeys="true">
+        insert into course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="no != null">no,</if>
+            <if test="descr != null">descr,</if>
+            <if test="times != null">times,</if>
+            <if test="teacherId != null">teacher_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+            <if test="no != null">#{no,jdbcType=VARCHAR},</if>
+            <if test="descr != null">#{descr,jdbcType=VARCHAR},</if>
+            <if test="times != null">#{times,jdbcType=VARCHAR},</if>
+            <if test="teacherId != null">#{teacherId,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yixian.entity.Course">
+        update course
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="no != null">
+                no = #{no,jdbcType=VARCHAR},
+            </if>
+            <if test="descr != null">
+                descr = #{descr,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                times = #{times,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherId != null">
+                teacher_id = #{teacherId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yixian.entity.Course">
+        update course
+        set name       = #{name,jdbcType=VARCHAR},
+            no         = #{no,jdbcType=VARCHAR},
+            descr      = #{descr,jdbcType=VARCHAR},
+            times      = #{times,jdbcType=VARCHAR},
+            teacher_id = #{teacher.id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

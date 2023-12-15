@@ -30,8 +30,11 @@ public class GradeController {
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             Grade grade) {
-        PageInfo<Grade> gradePageInfo = gradeService.selectPage(pageNum, pageSize, grade);
+                             @RequestParam(name = "courseName", required = false) String courseName,
+                             @RequestParam(name = "studentName", required = false) String studentName,
+                             @RequestParam(name = "studentId", required = false) Integer studentId,
+                             @RequestParam(name = "teacherId", required = false) Integer teacherId) {
+        PageInfo<Grade> gradePageInfo = gradeService.selectPage(pageNum, pageSize, courseName, studentName, studentId,teacherId);
         return Result.success(gradePageInfo);
     }
 

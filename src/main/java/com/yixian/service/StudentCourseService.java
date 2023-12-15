@@ -2,9 +2,9 @@ package com.yixian.service;
 
 import com.yixian.entity.StudentCourse;
 import com.yixian.exception.CustomException;
-import com.yixian.mapper.StudentCourseMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yixian.mapper.StudentCourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +25,14 @@ public class StudentCourseService {
         studentCourseMapper.insert(studentCourse);
     }
 
-    public PageInfo<StudentCourse> selectPage(Integer pageNum, Integer pageSize, StudentCourse studentCourse) {
+    public PageInfo<StudentCourse> selectPage(Integer pageNum, Integer pageSize, String name, String no, Integer studentId, Integer teacherId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<StudentCourse> list = studentCourseMapper.selectAll(studentCourse);
+        List<StudentCourse> list = studentCourseMapper.selectAll(name, no, studentId,teacherId);
+        System.err.println(list);
         return PageInfo.of(list);
     }
 
     public void deleteById(Integer id) {
-        studentCourseMapper.deleteById(id);
+        studentCourseMapper.deleteByPrimaryKey(Long.valueOf(id));
     }
 }

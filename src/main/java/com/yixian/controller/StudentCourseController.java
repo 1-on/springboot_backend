@@ -23,8 +23,11 @@ public class StudentCourseController {
     @GetMapping("/selectPage")
     public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "5") Integer pageSize,
-                             StudentCourse studentCourse) {
-        PageInfo<StudentCourse> coursePageInfo = studentCourseService.selectPage(pageNum, pageSize, studentCourse);
+                             @RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "no", required = false) String no,
+                             @RequestParam(name = "studentId", required = false) Integer studentId,
+                             @RequestParam(name = "teacherId", required = false) Integer teacherId) {
+        PageInfo<StudentCourse> coursePageInfo = studentCourseService.selectPage(pageNum, pageSize, name, no, studentId,teacherId);
         return Result.success(coursePageInfo);
     }
 

@@ -1,30 +1,33 @@
 package com.yixian.mapper;
 
+import com.yixian.entity.Account;
 import com.yixian.entity.Student;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
+/**
+* @author jiangfei
+* @description 针对表【student】的数据库操作Mapper
+* @createDate 2023-12-14 20:08:23
+* @Entity com.yixian.entity.Student
+*/
 public interface StudentMapper {
 
-    @Select("select * from student where username = #{username}")
+    int deleteByPrimaryKey(Long id);
+
+    int insert(Student record);
+
+    int insertSelective(Student record);
+
+    Student selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(Student record);
+
+    int updateByPrimaryKey(Student record);
+
     Student selectByUserName(String username);
 
-    @Insert("insert into student (username, password, name, sex, phone, email, birth, awatar, role) " +
-            "VALUES (#{username}, #{password}, #{name}, #{sex}, #{phone}, #{email}, #{birth}, #{awatar}, #{role})")
-    void insert(Student student);
-
-    @Delete("delete from student where id = #{id}")
-    void deleteById(Integer id);
-
-    @Update("update student set username =#{username},password=#{password},name=#{name},phone=#{phone}," +
-            "email=#{email},sex=#{sex},awatar=#{awatar} where id = #{id}")
-    void updateById(Student student);
-
-    @Select("select * from student where username like concat('%',#{username},'%') " +
-            "and name like concat('%',#{name},'%') order by id desc")
     List<Student> selectAll(Student student);
+
+    Integer selectIdByName(String name);
 }

@@ -5,17 +5,17 @@ import lombok.Data;
 
 /**
  * 
- * @TableName student
+ * @TableName teacher
  */
 @Data
-public class Student extends Account implements Serializable {
+public class Teacher extends Account implements Serializable {
     /**
      * ID
      */
     private Integer id;
 
     /**
-     * 学号
+     * 用户名
      */
     private String username;
 
@@ -25,7 +25,7 @@ public class Student extends Account implements Serializable {
     private String password;
 
     /**
-     * 名称
+     * 姓名
      */
     private String name;
 
@@ -43,11 +43,6 @@ public class Student extends Account implements Serializable {
      * 邮箱
      */
     private String email;
-
-    /**
-     * 生日
-     */
-    private String birth;
 
     /**
      * 头像
