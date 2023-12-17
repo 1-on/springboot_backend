@@ -3,15 +3,15 @@ package com.yixian.service;
 import com.yixian.entity.Account;
 import com.yixian.exception.CustomException;
 import com.yixian.mapper.AdminMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 @Service
 public class AdminService {
 
-    @Resource
+    @Autowired
     private AdminMapper adminMapper;
 
     public Account login(Account account) {

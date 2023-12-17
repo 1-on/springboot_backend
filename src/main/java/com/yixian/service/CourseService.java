@@ -44,6 +44,7 @@ public class CourseService {
     public void updateById(Course course) {
         Teacher teacher = teacherService.selectTeacherByName(course.getTeacher().getName());
         if (teacher == null) {
+            System.err.println("错误");
             throw new CustomException("没有该教师");
         }
         course.setTeacher(teacher);
