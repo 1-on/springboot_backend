@@ -43,5 +43,13 @@ public class Course implements Serializable {
 
     private Teacher teacher;
 
+    private Integer number; // 选课人数
+
+    private Integer passNumber; // 及格人数
+
+    private Integer haveGradeNumber; // 有成绩人数
+
+    private Double passRate; // 及格率
+
     private static final long serialVersionUID = 1L;
 }

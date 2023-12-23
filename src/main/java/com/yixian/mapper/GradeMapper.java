@@ -27,4 +27,7 @@ public interface GradeMapper {
     Grade selectByCondition(Grade grade);
 
     List<Grade> selectAll(String courseName, String studentName, Integer studentId, Integer teacherId);
+
+    List<Grade> selectAllById(Integer id);
+
 }

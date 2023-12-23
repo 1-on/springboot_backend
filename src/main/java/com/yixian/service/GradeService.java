@@ -55,4 +55,10 @@ public class GradeService {
     public void deleteById(Integer id) {
         gradeMapper.deleteByPrimaryKey(Long.valueOf(id));
     }
+
+
+    public List<Grade> selectAllById(Integer id) {
+       List<Grade> gradeList = gradeMapper.selectAllById(id);
+       return gradeList;
+    }
 }

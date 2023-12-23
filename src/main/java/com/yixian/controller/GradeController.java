@@ -1,11 +1,14 @@
 package com.yixian.controller;
 
 import com.yixian.common.Result;
+import com.yixian.entity.Course;
 import com.yixian.entity.Grade;
 import com.yixian.service.GradeService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("grade")
@@ -42,6 +45,12 @@ public class GradeController {
     public Result delete(@PathVariable Integer id) {
         gradeService.deleteById(id);
         return Result.success();
+    }
+
+    @GetMapping("/selectAll")
+    public Result selectCourseNum(@RequestParam(name = "id",required = false) Integer id) {
+        List<Grade> gradeList = gradeService.selectAllById(id);
+        return Result.success(gradeList);
     }
 
 }

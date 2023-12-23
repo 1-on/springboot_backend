@@ -54,4 +54,17 @@ public class CourseService {
     public void deleteById(Integer id) {
         courseMapper.deleteByPrimaryKey(Long.valueOf(id));
     }
+
+    public List<Course> selectCourseNum(Integer id) {
+        List<Course> courseList = courseMapper.selectCourseNum(id);
+        for (Course course : courseList) {
+            if (course.getHaveGradeNumber() == 0) {
+                course.setPassRate(100.0);
+            } else {
+                course.setPassRate(((double) course.getPassNumber() / course.getHaveGradeNumber()) * 100);
+            }
+            System.err.println(course);
+        }
+        return courseList;
+    }
 }

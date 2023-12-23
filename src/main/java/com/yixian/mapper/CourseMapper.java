@@ -27,4 +27,6 @@ public interface CourseMapper {
     List<Course> selectAll(String name, String no, String teacherName);
 
     Integer selectIdByName(String name);
+
+    List<Course> selectCourseNum(Integer id);
 }

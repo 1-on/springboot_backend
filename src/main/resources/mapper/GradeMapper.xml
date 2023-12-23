@@ -5,14 +5,14 @@
 <mapper namespace="com.yixian.mapper.GradeMapper">
 
     <resultMap id="BaseResultMap" type="com.yixian.entity.Grade">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="courseId" column="course_id" jdbcType="INTEGER"/>
-            <result property="studentId" column="student_id" jdbcType="INTEGER"/>
-            <result property="score" column="score" jdbcType="DOUBLE"/>
-            <result property="comment" column="comment" jdbcType="VARCHAR"/>
-            <result property="feedback" column="feedback" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+        <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+        <result property="score" column="score" jdbcType="DOUBLE"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="feedback" column="feedback" jdbcType="VARCHAR"/>
     </resultMap>
-    
+
     <resultMap id="GardeResultMap" type="com.yixian.entity.Grade">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="score" column="score" jdbcType="DOUBLE"/>
@@ -26,7 +26,7 @@
             <id property="id" column="sid"/>
             <result property="name" column="sname"/>
         </collection>
-     </resultMap>
+    </resultMap>
 
     <select id="selectAll" resultMap="GardeResultMap">
         select grade.*,student.name as sname,student.id sid, course.name as cname,course.id as cid from grade
@@ -50,9 +50,9 @@
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from grade
-        where  id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectByCondition" resultType="com.yixian.entity.Grade">
         select *
@@ -64,68 +64,75 @@
           and student.name = #{student.name}
           and course.name = #{course.name}
     </select>
+    <select id="selectAllById" resultType="com.yixian.entity.Grade" resultMap="GardeResultMap">
+        select grade.*,course.name as cname from grade
+        left join course
+        on grade.course_id = course.id
+        <where>
+            <if test="id!=null and id !=''">and grade.student_id=#{id}</if>
+        </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from grade
-        where  id = #{id,jdbcType=INTEGER} 
+        delete
+        from grade
+        where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Grade" useGeneratedKeys="true">
         insert into grade
-        ( id,course_id,student_id
-        ,score,comment,feedback
-        )
-        values (#{id,jdbcType=INTEGER},#{courseId,jdbcType=INTEGER},#{studentId,jdbcType=INTEGER}
-        ,#{score,jdbcType=DOUBLE},#{comment,jdbcType=VARCHAR},#{feedback,jdbcType=VARCHAR}
-        )
+        ( id, course_id, student_id
+        , score, comment, feedback)
+        values ( #{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}
+               , #{score,jdbcType=DOUBLE}, #{comment,jdbcType=VARCHAR}, #{feedback,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Grade" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.yixian.entity.Grade"
+            useGeneratedKeys="true">
         insert into grade
         <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="id != null">id,</if>
-                <if test="courseId != null">course_id,</if>
-                <if test="studentId != null">student_id,</if>
-                <if test="score != null">score,</if>
-                <if test="comment != null">comment,</if>
-                <if test="feedback != null">feedback,</if>
+            <if test="id != null">id,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="studentId != null">student_id,</if>
+            <if test="score != null">score,</if>
+            <if test="comment != null">comment,</if>
+            <if test="feedback != null">feedback,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-                <if test="id != null">#{id,jdbcType=INTEGER},</if>
-                <if test="courseId != null">#{courseId,jdbcType=INTEGER},</if>
-                <if test="studentId != null">#{studentId,jdbcType=INTEGER},</if>
-                <if test="score != null">#{score,jdbcType=DOUBLE},</if>
-                <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
-                <if test="feedback != null">#{feedback,jdbcType=VARCHAR},</if>
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="courseId != null">#{courseId,jdbcType=INTEGER},</if>
+            <if test="studentId != null">#{studentId,jdbcType=INTEGER},</if>
+            <if test="score != null">#{score,jdbcType=DOUBLE},</if>
+            <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
+            <if test="feedback != null">#{feedback,jdbcType=VARCHAR},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yixian.entity.Grade">
         update grade
         <set>
-                <if test="courseId != null">
-                    course_id = #{courseId,jdbcType=INTEGER},
-                </if>
-                <if test="studentId != null">
-                    student_id = #{studentId,jdbcType=INTEGER},
-                </if>
-                <if test="score != null">
-                    score = #{score,jdbcType=DOUBLE},
-                </if>
-                <if test="comment != null">
-                    comment = #{comment,jdbcType=VARCHAR},
-                </if>
-                <if test="feedback != null">
-                    feedback = #{feedback,jdbcType=VARCHAR},
-                </if>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=INTEGER},
+            </if>
+            <if test="studentId != null">
+                student_id = #{studentId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=DOUBLE},
+            </if>
+            <if test="comment != null">
+                comment = #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="feedback != null">
+                feedback = #{feedback,jdbcType=VARCHAR},
+            </if>
         </set>
-        where   id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yixian.entity.Grade">
         update grade
-        set 
-            course_id =  #{courseId,jdbcType=INTEGER},
-            student_id =  #{studentId,jdbcType=INTEGER},
-            score =  #{score,jdbcType=DOUBLE},
-            comment =  #{comment,jdbcType=VARCHAR},
-            feedback =  #{feedback,jdbcType=VARCHAR}
-        where   id = #{id,jdbcType=INTEGER} 
+        set course_id  = #{courseId,jdbcType=INTEGER},
+            student_id = #{studentId,jdbcType=INTEGER},
+            score      = #{score,jdbcType=DOUBLE},
+            comment    = #{comment,jdbcType=VARCHAR},
+            feedback   = #{feedback,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

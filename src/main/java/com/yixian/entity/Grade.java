@@ -1,10 +1,12 @@
 package com.yixian.entity;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
  * 成绩表
+ *
  * @TableName grade
  */
 @Data

@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -20,7 +22,7 @@ public class CourseController {
                              @RequestParam(name = "name", required = false) String name,
                              @RequestParam(name = "no", required = false) String no,
                              @RequestParam(name = "teacher", required = false) String teacher) {
-        PageInfo<Course> coursePageInfo = courseService.selectPage(pageNum, pageSize, name,no,teacher);
+        PageInfo<Course> coursePageInfo = courseService.selectPage(pageNum, pageSize, name, no, teacher);
         return Result.success(coursePageInfo);
     }
 
@@ -41,5 +43,13 @@ public class CourseController {
     public Result delete(@PathVariable Integer id) {
         courseService.deleteById(id);
         return Result.success();
+    }
+
+    // 查询课程信息 （选课人数、及格率）
+
+    @GetMapping("/selectCourseNum")
+    public Result selectCourseNum(@RequestParam(name = "id", required = false) Integer id) {
+        List<Course> courseList = courseService.selectCourseNum(id);
+        return Result.success(courseList);
     }
 }

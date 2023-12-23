@@ -25,6 +25,11 @@
         </association>
     </resultMap>
 
+    <resultMap id="CourseResultMap" type="com.yixian.entity.Course">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="number" column="number"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,name,no,
         descr,times,teacher_id
@@ -50,6 +55,23 @@
         select course.id
         from course
         where course.name = #{name}
+    </select>
+    <select id="selectCourseNum" resultType="com.yixian.entity.Course">
+        SELECT
+        course.NAME,
+        count( DISTINCT student_course.student_id ) AS number,
+        count( DISTINCT CASE WHEN grade.score >= 60 THEN grade.student_id END ) AS passNumber,
+        count( DISTINCT CASE WHEN grade.score IS NOT NULL THEN grade.student_id END ) AS haveGradeNumber
+        FROM
+        course
+        LEFT JOIN grade ON course.id = grade.course_id
+        LEFT JOIN student_course ON course.id = student_course.course_id
+        INNER JOIN student ON student.id = student_course.student_id
+        <where>
+            <if test="id!=null and id !=''">and course.teacher_id=#{id}</if>
+        </where>
+        GROUP BY
+        course.NAME
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
