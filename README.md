@@ -1,4 +1,5 @@
 # 学生成绩管理系统
+（此仓库为后端代码）
 ### 项目功能
 - 管理员、学生、老师三种角色
 - 管理员对学生老师的增删改查
@@ -13,4 +14,45 @@ springboot + mybatis + mysql <br>
 #### 前端
 Vue3.0 + Vue-Router  + Axios + ElementPlus + Echarts <br>
 
+### 项目运行
+- 克隆仓库
+```shell
+// 克隆后端代码
+git clone https://github.com/1-on/springboot_backend.git
+// 克隆前端代码
+git clone https://github.com/1-on/vueproject_frontend.git
+
+```
+- 执行student.sql文件创建数据库
+- 后端配置Maven加载依赖
+- 修改application.yml配置文件中的数据库账号密码以及url中的数据库名称
+- 前端下载依赖与启动
+```shell
+// 下载依赖
+npm i
+// 启动项目
+npm run dev
+```
+
+
 ### 项目截图
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/1.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/2.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/3.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/4.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/5.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/6.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/7.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/8.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/9.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/10.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/11.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/12.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/13.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/14.png)
+![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/15.png)
+
+
+
+
+
