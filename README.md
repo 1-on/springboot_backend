@@ -1,4 +1,4 @@
-# 学生成绩管理系统
+# 学生成绩管理系统(springboot+vue)
 （此仓库为后端代码）[前端仓库](https://github.com/1-on/springboot_forntend)
 ### 项目功能
 - 管理员、学生、老师三种角色
