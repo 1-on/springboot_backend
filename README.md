@@ -34,6 +34,10 @@ npm i
 npm run dev
 ```
 
+### License
+
+Copyright (c) 2023 一弦
+
 
 ### 项目截图
 ![image](https://github.com/1-on/img-storage/blob/main/studentGradeManager/1.png)
